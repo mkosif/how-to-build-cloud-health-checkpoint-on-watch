@@ -56,7 +56,8 @@ export class CloudDatabaseService {
     if (this.zone === null) {
       throw new Error('zone not ready');
     }
-    const query = new cloudDatabase.DatabaseQuery<HealthCheckpoint>(HealthCheckpoint).equalTo('userId', userId);
+    const query = new cloudDatabase.DatabaseQuery<HealthCheckpoint>(HealthCheckpoint)
+      .equalTo('userId', userId);
     const rows: HealthCheckpoint[] = await this.zone.query(query);
     if (rows.length === 0) {
       return 0;

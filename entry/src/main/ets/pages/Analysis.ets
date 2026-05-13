@@ -1,13 +1,12 @@
-import { router } from '@kit.ArkUI';
 import { CloudDatabaseService } from '../services/CloudDatabaseService';
 import { CloudFunctionService } from '../services/CloudFunctionService';
 import { DEMO_USER_ID } from '../services/MockHealthDataService';
 import { WeeklyAnalysisResult, emptyAnalysisResult } from '../models/WeeklyAnalysisResult';
 import { WatchCard, StatusPill } from '../components/WatchCard';
 
-@Entry
 @Component
-struct Analysis {
+export struct Analysis {
+  @Consume('pathStack') pathStack: NavPathStack;
   @State result: WeeklyAnalysisResult = emptyAnalysisResult();
   @State hasResult: boolean = false;
   @State tone: string = 'idle';
@@ -54,81 +53,88 @@ struct Analysis {
   }
 
   build() {
-    Scroll() {
-      Column({ space: 8 }) {
-        Row() {
-          Text('Weekly Analysis')
-            .fontSize(13)
-            .fontColor('#FFFFFF')
-            .fontWeight(FontWeight.Bold)
-            .layoutWeight(1);
-          StatusPill({ label: this.label, tone: this.tone });
-        }
-        .width('100%');
-
-        if (this.hasResult) {
-          WatchCard({ title: 'AVERAGES' }) {
-            this.avgRow('Steps', this.result.weeklyAverageSteps);
-            this.avgRow('HR', this.result.weeklyAverageHeartRate);
-            this.avgRow('Sleep', this.result.weeklyAverageSleepScore);
-          }
-
-          WatchCard({ title: 'SUMMARY' }) {
-            Text(this.result.summary.length > 0 ? this.result.summary : '—')
-              .fontSize(11)
+    NavDestination() {
+      Scroll() {
+        Column({ space: 8 }) {
+          Row() {
+            Text('Weekly Analysis')
+              .fontSize(13)
               .fontColor('#FFFFFF')
-              .maxLines(6);
+              .fontWeight(FontWeight.Bold)
+              .layoutWeight(1);
+            StatusPill({ label: this.label, tone: this.tone });
           }
+          .width('100%');
 
-          if (this.result.anomalies.length > 0) {
-            WatchCard({ title: 'ANOMALIES' }) {
-              ForEach(this.result.anomalies, (a: string) => {
-                Text(`• ${a}`)
-                  .fontSize(10)
-                  .fontColor('#F2A93B')
-                  .maxLines(3)
-                  .width('100%')
-                  .margin({ top: 2 });
-              }, (a: string) => a);
+          if (this.hasResult) {
+            WatchCard({ title: 'AVERAGES' }) {
+              this.avgRow('Steps', this.result.weeklyAverageSteps);
+              this.avgRow('HR', this.result.weeklyAverageHeartRate);
+              this.avgRow('Sleep', this.result.weeklyAverageSleepScore);
+            }
+
+            WatchCard({ title: 'SUMMARY' }) {
+              Text(this.result.summary.length > 0 ? this.result.summary : '-')
+                .fontSize(11)
+                .fontColor('#FFFFFF')
+                .maxLines(6);
+            }
+
+            if (this.result.anomalies.length > 0) {
+              WatchCard({ title: 'ANOMALIES' }) {
+                ForEach(this.result.anomalies, (a: string) => {
+                  Text(`* ${a}`)
+                    .fontSize(10)
+                    .fontColor('#F2A93B')
+                    .maxLines(3)
+                    .width('100%')
+                    .margin({ top: 2 });
+                }, (a: string) => a);
+              }
+            }
+          } else {
+            WatchCard({ title: 'CLOUD FUNCTION' }) {
+              Text('Invokes analyzeWeeklyHealth with the last 7 checkpoints from Cloud DB.')
+                .fontSize(10)
+                .fontColor('#9AA0A6')
+                .maxLines(4);
             }
           }
-        } else {
-          WatchCard({ title: 'CLOUD FUNCTION' }) {
-            Text('Invokes analyzeWeeklyHealth with the last 7 checkpoints from Cloud DB.')
-              .fontSize(10)
-              .fontColor('#9AA0A6')
-              .maxLines(4);
+
+          Button('Run analysis')
+            .fontSize(12)
+            .width('100%')
+            .height(36)
+            .backgroundColor('#1A73E8')
+            .onClick(() => {
+              this.run();
+            });
+
+          Button('Back')
+            .fontSize(11)
+            .width('100%')
+            .height(30)
+            .backgroundColor('#2A2D31')
+            .onClick(() => {
+              this.pathStack.pop();
+            });
+
+          if (this.msg.length > 0) {
+            Text(this.msg)
+              .fontSize(9)
+              .fontColor('#E5484D')
+              .maxLines(3)
+              .width('100%');
           }
         }
-
-        Button('Run analysis')
-          .fontSize(12)
-          .width('100%')
-          .height(36)
-          .backgroundColor('#1A73E8')
-          .onClick(() => this.run());
-
-        Button('Back')
-          .fontSize(11)
-          .width('100%')
-          .height(30)
-          .backgroundColor('#2A2D31')
-          .onClick(() => router.back());
-
-        if (this.msg.length > 0) {
-          Text(this.msg)
-            .fontSize(9)
-            .fontColor('#E5484D')
-            .maxLines(3)
-            .width('100%');
-        }
+        .width('100%')
+        .padding(10);
       }
       .width('100%')
-      .padding(10);
+      .height('100%')
+      .scrollBar(BarState.Off);
     }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#000000')
-    .scrollBar(BarState.Off);
+    .hideTitleBar(true)
+    .backgroundColor('#000000');
   }
 }

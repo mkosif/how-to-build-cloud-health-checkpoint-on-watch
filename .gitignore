@@ -1,5 +1,4 @@
-############################
-# HarmonyOS / ArkTS Project
+# HarmonyOS / ArkTS & JS (Lite) Project
 ############################
 
 # Node modules & OH modules
@@ -87,11 +86,11 @@ out/
 ############################
 *.iml
 
-# Ana dizindeki detail ve shell klasörlerini hariç tut
-/detail/
+# Ana dizindeki detail ve shell klasorlerini haric tut
+/details/
 /shell/
 
-# Tüm Excel dosyalarını hariç tut
+# Tum Excel dosyalarini haric tut
 *.xls
 *.xlsx
 *.xlsm

@@ -1,9 +1,5 @@
 {
   "src": [
-    "pages/Index",
-    "pages/AddCheckpoint",
-    "pages/History",
-    "pages/Analysis",
-    "pages/Reports"
+    "pages/Index"
   ]
 }

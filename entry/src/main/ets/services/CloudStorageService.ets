@@ -30,7 +30,11 @@ export class CloudStorageService {
     return cloudPath;
   }
 
-  async downloadReport(ctx: common.BaseContext, userId: string, localPath: string): Promise<string> {
+  async downloadReport(
+    ctx: common.BaseContext,
+    userId: string,
+    localPath: string
+  ): Promise<string> {
     const cloudPath = this.reportCloudPath(userId);
     const params: cloudStorage.DownloadParams = { localPath, cloudPath, overwrite: true };
     await this.bucketRef().downloadFile(ctx, params);

@@ -39,7 +39,7 @@ export class MockHealthDataService {
       heartRate,
       sleepScore,
       createdAt: Date.now(),
-      reportPath: '',
+      reportPath: ''
     };
     return out;
   }

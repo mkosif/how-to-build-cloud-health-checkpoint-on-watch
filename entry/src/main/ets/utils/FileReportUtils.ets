@@ -19,16 +19,20 @@ export class FileReportUtils {
     return `${ctx.filesDir}/${FileReportUtils.reportFileName()}`;
   }
 
-  static async writeExportJson(ctx: common.Context, checkpoints: HealthCheckpointPlain[]): Promise<string> {
+  static async writeExportJson(
+    ctx: common.Context,
+    checkpoints: HealthCheckpointPlain[]
+  ): Promise<string> {
     const path = FileReportUtils.exportLocalPath(ctx);
     const payload = JSON.stringify({
       exportedAt: Date.now(),
       count: checkpoints.length,
-      checkpoints,
+      checkpoints
     });
     let file: fileIo.File | null = null;
     try {
-      file = fileIo.openSync(path, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE | fileIo.OpenMode.TRUNC);
+      const flags = fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE | fileIo.OpenMode.TRUNC;
+      file = fileIo.openSync(path, flags);
       fileIo.writeSync(file.fd, payload);
       return path;
     } finally {

@@ -35,13 +35,16 @@ export class CloudFunctionService {
     return CloudFunctionService.instance;
   }
 
-  async analyzeWeekly(userId: string, checkpoints: HealthCheckpointPlain[]): Promise<WeeklyAnalysisResult> {
+  async analyzeWeekly(
+    userId: string,
+    checkpoints: HealthCheckpointPlain[]
+  ): Promise<WeeklyAnalysisResult> {
     const items: AnalyzePayloadCheckpoint[] = checkpoints.map((c: HealthCheckpointPlain) => {
       const item: AnalyzePayloadCheckpoint = {
         checkpointDate: c.checkpointDate,
         steps: c.steps,
         heartRate: c.heartRate,
-        sleepScore: c.sleepScore,
+        sleepScore: c.sleepScore
       };
       return item;
     });
@@ -51,7 +54,7 @@ export class CloudFunctionService {
       name: ANALYZE_FUNCTION_NAME,
       version: '$latest',
       timeout: 15000,
-      data: payload,
+      data: payload
     };
     const response: cloudFunction.FunctionResult = await cloudFunction.call(params);
 
@@ -69,7 +72,7 @@ export class CloudFunctionService {
       weeklyAverageHeartRate: parsed.weeklyAverageHeartRate ?? 0,
       weeklyAverageSleepScore: parsed.weeklyAverageSleepScore ?? 0,
       anomalies: parsed.anomalies ?? [],
-      summary: parsed.summary ?? '',
+      summary: parsed.summary ?? ''
     };
     return out;
   }

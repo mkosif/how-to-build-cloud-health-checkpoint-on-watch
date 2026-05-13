@@ -36,7 +36,7 @@ export class HealthCheckpoint extends cloudDatabase.DatabaseObject {
       heartRate: this.heartRate,
       sleepScore: this.sleepScore,
       createdAt: this.createdAt,
-      reportPath: this.reportPath,
+      reportPath: this.reportPath
     };
     return out;
   }
@@ -75,8 +75,8 @@ export function validateCheckpoint(c: HealthCheckpointPlain): CheckpointValidati
     const r: CheckpointValidation = { ok: false, reason: 'sleepScore must be 0..100' };
     return r;
   }
-  const r: CheckpointValidation = { ok: true, reason: '' };
-  return r;
+  const ok: CheckpointValidation = { ok: true, reason: '' };
+  return ok;
 }
 
 export function clonePlain(c: HealthCheckpointPlain): HealthCheckpointPlain {
@@ -88,7 +88,7 @@ export function clonePlain(c: HealthCheckpointPlain): HealthCheckpointPlain {
     heartRate: c.heartRate,
     sleepScore: c.sleepScore,
     createdAt: c.createdAt,
-    reportPath: c.reportPath,
+    reportPath: c.reportPath
   };
   return out;
 }

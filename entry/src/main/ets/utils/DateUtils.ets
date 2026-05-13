@@ -1,3 +1,5 @@
+const MS_PER_DAY = 86400000;
+
 export class DateUtils {
   static formatYmd(date: Date): string {
     const y = date.getFullYear();
@@ -7,19 +9,23 @@ export class DateUtils {
   }
 
   static todayYmd(): string {
-    return DateUtils.formatYmd(new Date());
+    const today = new Date();
+    return DateUtils.formatYmd(today);
   }
 
   static daysAgoYmd(days: number): string {
-    const d = new Date();
-    d.setDate(d.getDate() - days);
-    return DateUtils.formatYmd(d);
+    const baseMs = Date.now();
+    const cursor = new Date(baseMs - days * MS_PER_DAY);
+    return DateUtils.formatYmd(cursor);
   }
 
   static lastNDays(n: number): string[] {
     const out: string[] = [];
+    const baseMs = Date.now();
+    const cursor = new Date(baseMs);
     for (let i = n - 1; i >= 0; i--) {
-      out.push(DateUtils.daysAgoYmd(i));
+      cursor.setTime(baseMs - i * MS_PER_DAY);
+      out.push(DateUtils.formatYmd(cursor));
     }
     return out;
   }

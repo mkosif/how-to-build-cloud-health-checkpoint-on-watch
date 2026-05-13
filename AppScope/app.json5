@@ -1,7 +1,7 @@
 {
   "app": {
-    "bundleName": "com.hmosdemos.wearable.cloudhealthcheckpoint",
-    "vendor": "example",
+    "bundleName": "com.hmosdemos.wearable.how_to_build_cloud_health_checkpoint_on_watch",
+    "vendor": "hmosdemos",
     "versionCode": 1000000,
     "versionName": "1.0.0",
     "icon": "$media:layered_image",

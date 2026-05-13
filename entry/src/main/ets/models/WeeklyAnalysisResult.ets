@@ -8,12 +8,13 @@ export interface WeeklyAnalysisResult {
 }
 
 export function emptyAnalysisResult(): WeeklyAnalysisResult {
-  return {
+  const r: WeeklyAnalysisResult = {
     trend: 'unknown',
     weeklyAverageSteps: 0,
     weeklyAverageHeartRate: 0,
     weeklyAverageSleepScore: 0,
     anomalies: [],
-    summary: '',
+    summary: ''
   };
+  return r;
 }
