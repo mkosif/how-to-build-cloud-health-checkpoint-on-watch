@@ -1,6 +1,6 @@
 # How To Build Cloud Health Checkpoint On Watch
 
-This project is a wearable watch application built for **HarmonyOS NEXT** wearable devices, developed using **ArkTS**. It demonstrates the full **CloudFoundationKit** lifecycle from a power-constrained watch: daily health checkpoints (steps, heart rate, sleep score) are persisted in Cloud Database, weekly trend and anomaly analysis runs on the server through a Cloud Function, and report files are exchanged with the default Cloud Storage bucket.
+This project is a wearable watch application built for **HarmonyOS NEXT** wearable devices, developed using **ArkTS**. It demonstrates the full **CloudFoundationKit** lifecycle from a power-constrained watch: daily health checkpoints (steps, heart rate, sleep score) are persisted with `cloudDatabase.DatabaseZone` and `cloudDatabase.DatabaseObject`, weekly trend and anomaly analysis runs on the server through `cloudFunction.call()`, and report files are exchanged with the default Cloud Storage bucket through `cloudStorage.StorageBucket.uploadFile()` and `downloadFile()`.
 
 The how-to-build-cloud-health-checkpoint-on-watch sample is intentionally scoped to CloudFoundationKit behavior and wearable UI.
 
@@ -12,7 +12,7 @@ The following are the application's featured use cases:
 2. The user can adjust steps, heart rate, and sleep score on the Add Checkpoint screen and upsert the record into Cloud Database.
 3. The user can list the last seven checkpoints from Cloud Database and optionally seed a deterministic mock week for the codelab.
 4. The user can invoke the `analyzeWeeklyHealth` Cloud Function and view the returned trend, averages, anomalies, and summary.
-5. The user can export the current checkpoints as a JSON file and upload it to Cloud Storage, then download the server-generated PDF summary report.
+5. The user can export the current checkpoints as a JSON file and upload it with `uploadFile()`, then download the server-generated PDF summary report with `downloadFile()`.
 
 # Tech Stack
 
