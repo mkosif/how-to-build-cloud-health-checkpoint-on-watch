@@ -54,7 +54,7 @@ export struct History {
       Text(item.checkpointDate.substring(5))
         .fontSize(11)
         .fontColor('#9AA0A6')
-        .width(40);
+        .width(42);
       Text(`${item.steps}`)
         .fontSize(11)
         .fontColor('#FFFFFF')
@@ -80,16 +80,19 @@ export struct History {
       Scroll() {
         Column({ space: 8 }) {
           Row() {
-            Text('History')
-              .fontSize(13)
-              .fontColor('#FFFFFF')
-              .fontWeight(FontWeight.Bold)
-              .layoutWeight(1);
             StatusPill({ label: this.label, tone: this.tone });
           }
-          .width('100%');
+          .width('100%')
+          .justifyContent(FlexAlign.Center);
 
-          WatchCard({ title: 'DATE / STEPS / HR / SLP' }) {
+          Text('History')
+            .fontSize(13)
+            .fontColor('#FFFFFF')
+            .fontWeight(FontWeight.Bold)
+            .textAlign(TextAlign.Center)
+            .width('100%');
+
+          WatchCard({ title: 'DATE  STEPS  HR  SLP' }) {
             if (this.rows.length === 0) {
               Text('no rows yet')
                 .fontSize(11)
@@ -101,47 +104,59 @@ export struct History {
             }
           }
 
-          Button('Reload')
-            .fontSize(11)
-            .width('100%')
-            .height(32)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.load();
-            });
+          Button() {
+            Text('Reload')
+              .fontSize(12)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(36)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.load();
+          });
 
-          Button('Seed mock 7d')
-            .fontSize(11)
-            .width('100%')
-            .height(32)
-            .backgroundColor('#1A73E8')
-            .onClick(() => {
-              this.seedMockWeek();
-            });
+          Button() {
+            Text('Seed mock 7d')
+              .fontSize(13)
+              .fontColor('#FFFFFF')
+              .fontWeight(FontWeight.Medium);
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#1A73E8')
+          .onClick(() => {
+            this.seedMockWeek();
+          });
 
-          Button('Back')
-            .fontSize(11)
-            .width('100%')
-            .height(30)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pop();
-            });
+          Button() {
+            Text('Back')
+              .fontSize(12)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(34)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pop();
+          });
 
           if (this.msg.length > 0) {
             Text(this.msg)
               .fontSize(9)
               .fontColor('#E5484D')
-              .maxLines(3)
+              .maxLines(4)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
               .width('100%');
           }
         }
         .width('100%')
-        .padding(10);
+        .padding({ top: 40, bottom: 60, left: 32, right: 32 });
       }
       .width('100%')
       .height('100%')
-      .scrollBar(BarState.Off);
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring);
     }
     .hideTitleBar(true)
     .backgroundColor('#000000');

@@ -7,18 +7,18 @@ export struct WatchCard {
     Column() {
       if (this.title.length > 0) {
         Text(this.title)
-          .fontSize(12)
+          .fontSize(11)
           .fontColor('#9AA0A6')
           .fontWeight(FontWeight.Medium)
-          .margin({ bottom: 4 });
+          .margin({ bottom: 6 });
       }
       this.body();
     }
     .alignItems(HorizontalAlign.Start)
     .width('100%')
-    .padding(10)
+    .padding(12)
     .backgroundColor('#111418')
-    .borderRadius(14);
+    .borderRadius(16);
   }
 }
 
@@ -44,8 +44,9 @@ export struct StatusPill {
     Text(this.label)
       .fontSize(10)
       .fontColor('#FFFFFF')
+      .fontWeight(FontWeight.Medium)
       .backgroundColor(this.toneColor())
-      .padding({ left: 6, right: 6, top: 2, bottom: 2 })
-      .borderRadius(8);
+      .padding({ left: 8, right: 8, top: 3, bottom: 3 })
+      .borderRadius(10);
   }
 }

@@ -64,14 +64,15 @@ struct Index {
   metric(label: string, value: string) {
     Column() {
       Text(value)
-        .fontSize(16)
+        .fontSize(18)
         .fontColor('#FFFFFF')
         .fontWeight(FontWeight.Bold);
       Text(label)
-        .fontSize(9)
+        .fontSize(10)
         .fontColor('#9AA0A6');
     }
-    .alignItems(HorizontalAlign.Center);
+    .alignItems(HorizontalAlign.Center)
+    .layoutWeight(1);
   }
 
   build() {
@@ -79,15 +80,17 @@ struct Index {
       Scroll() {
         Column({ space: 8 }) {
           Row() {
-            Text('Health Checkpoint')
-              .fontSize(14)
-              .fontColor('#FFFFFF')
-              .fontWeight(FontWeight.Bold)
-              .layoutWeight(1);
             StatusPill({ label: this.cloudLabel, tone: this.cloudTone });
           }
           .width('100%')
-          .alignItems(VerticalAlign.Center);
+          .justifyContent(FlexAlign.Center);
+
+          Text('Health Checkpoint')
+            .fontSize(13)
+            .fontColor('#FFFFFF')
+            .fontWeight(FontWeight.Bold)
+            .textAlign(TextAlign.Center)
+            .width('100%');
 
           WatchCard({ title: 'TODAY' }) {
             if (this.latest !== null) {
@@ -96,11 +99,12 @@ struct Index {
                 this.metric('HR', `${this.latest.heartRate}`);
                 this.metric('Sleep', `${this.latest.sleepScore}`);
               }
-              .width('100%')
-              .justifyContent(FlexAlign.SpaceBetween);
+              .width('100%');
               Text(this.latest.checkpointDate)
                 .fontSize(10)
                 .fontColor('#9AA0A6')
+                .textAlign(TextAlign.Center)
+                .width('100%')
                 .margin({ top: 4 });
             } else {
               Text('no data')
@@ -109,56 +113,71 @@ struct Index {
             }
           }
 
-          Button('Add Checkpoint')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#1A73E8')
-            .onClick(() => {
-              this.pathStack.pushPathByName('AddCheckpoint', null);
-            });
+          Button() {
+            Text('Add Checkpoint')
+              .fontSize(13)
+              .fontColor('#FFFFFF')
+              .fontWeight(FontWeight.Medium);
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#1A73E8')
+          .onClick(() => {
+            this.pathStack.pushPathByName('AddCheckpoint', null);
+          });
 
-          Button('History')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pushPathByName('History', null);
-            });
+          Button() {
+            Text('History')
+              .fontSize(13)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pushPathByName('History', null);
+          });
 
-          Button('Weekly Analysis')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pushPathByName('Analysis', null);
-            });
+          Button() {
+            Text('Weekly Analysis')
+              .fontSize(13)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pushPathByName('Analysis', null);
+          });
 
-          Button('Reports')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pushPathByName('Reports', null);
-            });
+          Button() {
+            Text('Reports')
+              .fontSize(13)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pushPathByName('Reports', null);
+          });
 
           if (this.errorMsg.length > 0) {
             Text(this.errorMsg)
               .fontSize(9)
               .fontColor('#E5484D')
-              .maxLines(3)
+              .maxLines(4)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
               .width('100%');
           }
         }
         .width('100%')
-        .padding(10);
+        .padding({ top: 40, bottom: 60, left: 32, right: 32 });
       }
       .width('100%')
       .height('100%')
-      .scrollBar(BarState.Off);
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring);
     }
     .navDestination(pageMap)
     .hideTitleBar(true)

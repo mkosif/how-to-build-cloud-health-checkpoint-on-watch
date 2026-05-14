@@ -49,7 +49,8 @@ export struct Analysis {
         .fontColor('#FFFFFF')
         .fontWeight(FontWeight.Bold);
     }
-    .width('100%');
+    .width('100%')
+    .padding({ top: 2, bottom: 2 });
   }
 
   build() {
@@ -57,14 +58,17 @@ export struct Analysis {
       Scroll() {
         Column({ space: 8 }) {
           Row() {
-            Text('Weekly Analysis')
-              .fontSize(13)
-              .fontColor('#FFFFFF')
-              .fontWeight(FontWeight.Bold)
-              .layoutWeight(1);
             StatusPill({ label: this.label, tone: this.tone });
           }
-          .width('100%');
+          .width('100%')
+          .justifyContent(FlexAlign.Center);
+
+          Text('Weekly Analysis')
+            .fontSize(13)
+            .fontColor('#FFFFFF')
+            .fontWeight(FontWeight.Bold)
+            .textAlign(TextAlign.Center)
+            .width('100%');
 
           if (this.hasResult) {
             WatchCard({ title: 'AVERAGES' }) {
@@ -77,7 +81,8 @@ export struct Analysis {
               Text(this.result.summary.length > 0 ? this.result.summary : '-')
                 .fontSize(11)
                 .fontColor('#FFFFFF')
-                .maxLines(6);
+                .maxLines(8)
+                .textOverflow({ overflow: TextOverflow.Ellipsis });
             }
 
             if (this.result.anomalies.length > 0) {
@@ -87,6 +92,7 @@ export struct Analysis {
                     .fontSize(10)
                     .fontColor('#F2A93B')
                     .maxLines(3)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis })
                     .width('100%')
                     .margin({ top: 2 });
                 }, (a: string) => a);
@@ -97,42 +103,51 @@ export struct Analysis {
               Text('Invokes analyzeWeeklyHealth with the last 7 checkpoints from Cloud DB.')
                 .fontSize(10)
                 .fontColor('#9AA0A6')
-                .maxLines(4);
+                .maxLines(6);
             }
           }
 
-          Button('Run analysis')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#1A73E8')
-            .onClick(() => {
-              this.run();
-            });
+          Button() {
+            Text('Run analysis')
+              .fontSize(13)
+              .fontColor('#FFFFFF')
+              .fontWeight(FontWeight.Medium);
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#1A73E8')
+          .onClick(() => {
+            this.run();
+          });
 
-          Button('Back')
-            .fontSize(11)
-            .width('100%')
-            .height(30)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pop();
-            });
+          Button() {
+            Text('Back')
+              .fontSize(12)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(34)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pop();
+          });
 
           if (this.msg.length > 0) {
             Text(this.msg)
               .fontSize(9)
               .fontColor('#E5484D')
-              .maxLines(3)
+              .maxLines(4)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
               .width('100%');
           }
         }
         .width('100%')
-        .padding(10);
+        .padding({ top: 40, bottom: 60, left: 32, right: 32 });
       }
       .width('100%')
       .height('100%')
-      .scrollBar(BarState.Off);
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring);
     }
     .hideTitleBar(true)
     .backgroundColor('#000000');

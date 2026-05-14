@@ -1,3 +1,5 @@
+> **Note:** To access all shared projects, get information about environment setup, and view other guides, please visit [Explore-In-HMOS-Wearable Index](https://github.com/Explore-In-HMOS-Wearable/hmos-index).
+
 # How To Build Cloud Health Checkpoint On Watch
 
 This project is a wearable watch application built for **HarmonyOS NEXT** wearable devices, developed using **ArkTS**. It demonstrates the full **CloudFoundationKit** lifecycle from a power-constrained watch: daily health checkpoints (steps, heart rate, sleep score) are persisted with `cloudDatabase.DatabaseZone` and `cloudDatabase.DatabaseObject`, weekly trend and anomaly analysis runs on the server through `cloudFunction.call()`, and report files are exchanged with the default Cloud Storage bucket through `cloudStorage.StorageBucket.uploadFile()` and `downloadFile()`.
@@ -65,4 +67,4 @@ entry/src/main/ets/
 # License
 
 Cloud Health Checkpoint is distributed under the terms of the MIT License.
-See the [LICENSE](./LICENSE) for more information.
+See the [LICENSE](/LICENSE) for more information.

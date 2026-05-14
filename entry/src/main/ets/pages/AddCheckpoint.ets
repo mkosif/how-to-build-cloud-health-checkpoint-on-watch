@@ -54,32 +54,43 @@ export struct AddCheckpoint {
 
   @Builder
   stepper(label: string, value: string, onDec: () => void, onInc: () => void) {
-    Row() {
+    Row({ space: 6 }) {
       Text(label)
         .fontSize(11)
         .fontColor('#9AA0A6')
-        .width(48);
-      Button('-')
-        .fontSize(14)
-        .width(28)
-        .height(28)
-        .backgroundColor('#2A2D31')
-        .onClick(onDec);
+        .width(40);
+      Button() {
+        Text('-')
+          .fontSize(18)
+          .fontColor('#FFFFFF')
+          .fontWeight(FontWeight.Bold);
+      }
+      .width(32)
+      .height(32)
+      .type(ButtonType.Circle)
+      .backgroundColor('#2A2D31')
+      .onClick(onDec);
       Text(value)
-        .fontSize(13)
+        .fontSize(14)
         .fontColor('#FFFFFF')
         .fontWeight(FontWeight.Bold)
         .layoutWeight(1)
         .textAlign(TextAlign.Center);
-      Button('+')
-        .fontSize(14)
-        .width(28)
-        .height(28)
-        .backgroundColor('#2A2D31')
-        .onClick(onInc);
+      Button() {
+        Text('+')
+          .fontSize(18)
+          .fontColor('#FFFFFF')
+          .fontWeight(FontWeight.Bold);
+      }
+      .width(32)
+      .height(32)
+      .type(ButtonType.Circle)
+      .backgroundColor('#2A2D31')
+      .onClick(onInc);
     }
     .width('100%')
-    .alignItems(VerticalAlign.Center);
+    .alignItems(VerticalAlign.Center)
+    .padding({ top: 4, bottom: 4 });
   }
 
   build() {
@@ -87,14 +98,17 @@ export struct AddCheckpoint {
       Scroll() {
         Column({ space: 8 }) {
           Row() {
-            Text('Add Checkpoint')
-              .fontSize(13)
-              .fontColor('#FFFFFF')
-              .fontWeight(FontWeight.Bold)
-              .layoutWeight(1);
             StatusPill({ label: this.label, tone: this.tone });
           }
-          .width('100%');
+          .width('100%')
+          .justifyContent(FlexAlign.Center);
+
+          Text('Add Checkpoint')
+            .fontSize(13)
+            .fontColor('#FFFFFF')
+            .fontWeight(FontWeight.Bold)
+            .textAlign(TextAlign.Center)
+            .width('100%');
 
           WatchCard({ title: this.draft.checkpointDate }) {
             this.stepper('Steps', `${this.draft.steps}`,
@@ -120,50 +134,62 @@ export struct AddCheckpoint {
               });
           }
 
-          Button('Re-mock today')
-            .fontSize(11)
-            .width('100%')
-            .height(32)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.draft = MockHealthDataService.generateToday(DEMO_USER_ID);
-              this.tone = 'idle';
-              this.label = 'idle';
-              this.msg = '';
-            });
+          Button() {
+            Text('Re-mock today')
+              .fontSize(12)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(36)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.draft = MockHealthDataService.generateToday(DEMO_USER_ID);
+            this.tone = 'idle';
+            this.label = 'idle';
+            this.msg = '';
+          });
 
-          Button('Save to Cloud DB')
-            .fontSize(12)
-            .width('100%')
-            .height(36)
-            .backgroundColor('#1A73E8')
-            .onClick(() => {
-              this.saveDraft();
-            });
+          Button() {
+            Text('Save to Cloud DB')
+              .fontSize(13)
+              .fontColor('#FFFFFF')
+              .fontWeight(FontWeight.Medium);
+          }
+          .width('100%')
+          .height(40)
+          .backgroundColor('#1A73E8')
+          .onClick(() => {
+            this.saveDraft();
+          });
 
-          Button('Back')
-            .fontSize(11)
-            .width('100%')
-            .height(30)
-            .backgroundColor('#2A2D31')
-            .onClick(() => {
-              this.pathStack.pop();
-            });
+          Button() {
+            Text('Back')
+              .fontSize(12)
+              .fontColor('#FFFFFF');
+          }
+          .width('100%')
+          .height(34)
+          .backgroundColor('#2A2D31')
+          .onClick(() => {
+            this.pathStack.pop();
+          });
 
           if (this.msg.length > 0) {
             Text(this.msg)
               .fontSize(9)
               .fontColor(this.tone === 'err' ? '#E5484D' : '#9AA0A6')
-              .maxLines(3)
+              .maxLines(4)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
               .width('100%');
           }
         }
         .width('100%')
-        .padding(10);
+        .padding({ top: 40, bottom: 60, left: 32, right: 32 });
       }
       .width('100%')
       .height('100%')
-      .scrollBar(BarState.Off);
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring);
     }
     .hideTitleBar(true)
     .backgroundColor('#000000');
